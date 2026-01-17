@@ -14,7 +14,7 @@ export default function ConceptCard({ concept, onClick }) {
                     {concept.image ? (
                         <div className="relative w-32 h-32">
                             <img
-                                src={concept.image}
+                                src={concept.image.startsWith('/') ? import.meta.env.BASE_URL.replace(/\/$/, '') + concept.image : concept.image}
                                 alt={concept.universal_concept}
                                 className="w-full h-full object-cover rounded-full border-4 border-white shadow-md grayscale group-hover:grayscale-0 transition-all duration-500"
                             />

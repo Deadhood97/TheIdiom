@@ -30,7 +30,18 @@ function App() {
 
     // Load passport
     setVisitedConcepts(getVisitedConcepts());
+
+    // Check first visit
+    const hasVisited = localStorage.getItem('has-seen-manifesto-v1');
+    if (!hasVisited) {
+      setIsAboutOpen(true);
+    }
   }, []);
+
+  const handleCloseAbout = () => {
+    setIsAboutOpen(false);
+    localStorage.setItem('has-seen-manifesto-v1', 'true');
+  };
 
   // Handle Stamp Collection
   useEffect(() => {
@@ -66,7 +77,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-paper text-ink p-8 md:p-12 transition-colors duration-700 font-sans">
-      <AboutPage isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
+      <AboutPage isOpen={isAboutOpen} onClose={handleCloseAbout} />
 
       <Passport
         isOpen={isPassportOpen}
@@ -82,7 +93,7 @@ function App() {
           >
             The Idiom
           </h1>
-          <p className="text-xs uppercase tracking-[0.3em] text-ink/60 font-bold">Global Cultural Archive</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-ink/60 font-bold">Mapping the Universal Truths of Human Language</p>
         </div>
 
         <div className="flex gap-4 items-center">
@@ -169,7 +180,7 @@ function App() {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.2 }}
-                            src={activeConcept.image}
+                            src={activeConcept.image.startsWith('/') ? import.meta.env.BASE_URL.replace(/\/$/, '') + activeConcept.image : activeConcept.image}
                             alt={activeConcept.universal_concept}
                             className="w-full h-full object-cover rounded-full border-4 border-white/80 shadow-2xl"
                           />
