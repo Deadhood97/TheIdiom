@@ -53,102 +53,114 @@ app.post('/api/revise', async (req, res) => {
 
   try {
     // 1. Fetch current idiom
-    const { rows } = await query(
+    const { rows: idiomRows } = await query(
       'SELECT * FROM idioms WHERE concept_id = $1 AND script = $2',
       [conceptId, idiomScript]
     );
 
-    if (rows.length === 0) return res.status(404).json({ error: 'Idiom not found' });
-    const idiom = rows[0];
+    if (idiomRows.length === 0) return res.status(404).json({ error: 'Idiom not found' });
+    const idiom = idiomRows[0];
 
-    // 2. Draft Revision (The Creator)
-    const draftPrompt = `
-      You are a linguistic expert helping to update an idiom dictionary.
+    // 2. Fetch all concepts (to allow moving)
+    const { rows: concepts } = await query('SELECT * FROM concepts');
+    const conceptList = concepts.map(c => `- ${c.id}: "${c.universal_concept}" (${c.emoji})`).join('\n');
+
+    // 3. Linguistic Expert Evaluation
+    const expertPrompt = `
+      You are a World-Class Linguistic Expert and Cultural Consultant.
       
       Current Idiom Entry:
-      ${JSON.stringify(idiom, null, 2)}
+      - Language: ${idiom.language}
+      - Script: ${idiom.script}
+      - Current Concept: "${concepts.find(c => c.id === conceptId)?.universal_concept}" (${conceptId})
+      - Current Meaning: "${idiom.meaning}"
       
       User Feedback: "${userFeedback}"
       
-      Task:
-      Based on the user feedback, revise the idiom entry. 
-      - If the feedback suggests a better translation, update 'literal_translation'.
-      - If it adds cultural context, update 'origin_story' or add a 'cultural_context' field.
-      - If it suggests a usage correction, update 'usage_level'.
-      - Maintain the JSON structure.
-      - Return ONLY the updated JSON object fields that changed.
-    `;
-
-    const draftResponse = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [{ role: "user", content: draftPrompt }],
-      response_format: { type: "json_object" },
-    });
-
-    const draftIdiom = JSON.parse(draftResponse.choices[0].message.content);
-
-    // 3. Verification (The Critic)
-    const criticPrompt = `
-      You are a strict data integrity verifier for a cultural archive.
-      
-      Original Idiom: ${JSON.stringify(idiom)}
-      User Feedback: "${userFeedback}"
-      Proposed Revision: ${JSON.stringify(draftIdiom)}
+      Available Concepts in the Archive:
+      ${conceptList}
       
       Task:
-      Verify if the Proposed Revision is safe, accurate, and relevant to the User Feedback.
-      - REJECT if it contains hate speech, profanity, or malicious content.
-      - REJECT if it hallucinates facts not supported by the feedback or common knowledge.
-      - REJECT if it destroys the original data structure.
+      Evaluate the user feedback seriously. Your goal is the highest linguistic accuracy.
+      
+      Decisions:
+      - "KEEP": The feedback is incorrect, malicious, or the current mapping is already optimal.
+      - "UPDATE": The idiom belongs in this concept, but the translation, meaning, or context needs refinement based on the feedback.
+      - "MOVE": The idiom is valid but belongs in a DIFFERENT concept. Specify the new 'concept_id' from the list above.
+      - "DELETE": The idiom is fundamentally fake, incorrect, or doesn't fit ANY of the available concepts, and the feedback correctly identifies it as a mismatch that cannot be fixed by an update.
       
       Return JSON:
       {
-        "approved": boolean,
-        "reason": "string explanation"
+        "decision": "KEEP" | "UPDATE" | "MOVE" | "DELETE",
+        "reason": "Clear explanation of your linguistic reasoning",
+        "new_concept_id": "string if decision is MOVE",
+        "updated_fields": {
+           "literal_translation": "...",
+           "meaning": "...",
+           "origin_story": "...",
+           "cultural_context": "...",
+           "usage_example": { "native": "...", "translation": "..." },
+           "literature_reference": { "source": "...", "context": "..." }
+        } (only if decision is UPDATE or MOVE)
       }
     `;
 
-    const criticResponse = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
       model: "gpt-4o",
-      messages: [{ role: "user", content: criticPrompt }],
+      messages: [{ role: "user", content: expertPrompt }],
       response_format: { type: "json_object" },
     });
 
-    const verification = JSON.parse(criticResponse.choices[0].message.content);
+    const result = JSON.parse(response.choices[0].message.content);
+    console.log(`🤖 AI Decision for "${idiomScript}": ${result.decision} - ${result.reason}`);
 
-    if (!verification.approved) {
-      console.warn(`Revision rejected by Critic: ${verification.reason}`);
-      return res.status(400).json({
-        error: "Revision rejected by AI Verifier",
-        reason: verification.reason
+    if (result.decision === 'KEEP') {
+      return res.json({ success: true, action: 'KEEP', reason: result.reason });
+    }
+
+    if (result.decision === 'DELETE') {
+      await query('DELETE FROM idioms WHERE id = $1', [idiom.id]);
+      return res.json({ success: true, action: 'DELETE', reason: result.reason });
+    }
+
+    if (result.decision === 'UPDATE' || result.decision === 'MOVE') {
+      const targetConceptId = result.decision === 'MOVE' ? result.new_concept_id : conceptId;
+
+      // Merge updates
+      const updated = { ...idiom, ...result.updated_fields };
+
+      await query(
+        `UPDATE idioms SET 
+          concept_id = $1,
+          literal_translation = $2,
+          origin_story = $3,
+          cultural_context = $4,
+          meaning = $5,
+          usage_example = $6,
+          literature_reference = $7
+         WHERE id = $8`,
+        [
+          targetConceptId,
+          updated.literal_translation,
+          updated.origin_story,
+          updated.cultural_context,
+          updated.meaning,
+          JSON.stringify(updated.usage_example),
+          JSON.stringify(updated.literature_reference),
+          idiom.id
+        ]
+      );
+
+      return res.json({
+        success: true,
+        action: result.decision,
+        reason: result.reason,
+        updatedIdiom: { ...updated, concept_id: targetConceptId }
       });
     }
 
-    // 4. Update data in DB
-    // Merge new fields
-    const updatedIdiom = { ...idiom, ...draftIdiom };
+    res.status(500).json({ error: 'Unexpected AI decision' });
 
-    await query(
-      `UPDATE idioms SET 
-        literal_translation = $1,
-        origin_story = $2,
-        cultural_context = $3,
-        meaning = $4,
-        usage_example = $5,
-        literature_reference = $6
-       WHERE id = $7`,
-      [
-        updatedIdiom.literal_translation,
-        updatedIdiom.origin_story,
-        updatedIdiom.cultural_context,
-        updatedIdiom.meaning,
-        JSON.stringify(updatedIdiom.usage_example),
-        JSON.stringify(updatedIdiom.literature_reference),
-        idiom.id
-      ]
-    );
-
-    res.json({ success: true, updatedIdiom: updatedIdiom, verification: verification.reason });
   } catch (error) {
     console.error('Error revising data:', error);
     res.status(500).json({ error: 'Failed to revise data' });

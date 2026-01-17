@@ -40,9 +40,11 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
             });
             const data = await res.json();
             if (data.success) {
-                onUpdate(data.updatedIdiom);
+                onUpdate(data.updatedIdiom, conceptId, idiom.script);
                 setIsEditing(false);
                 setFeedback('');
+                if (data.action === 'DELETE') alert("The linguist AI has removed this idiom after verifying your feedback.");
+                if (data.action === 'MOVE') alert("The linguist AI has moved this idiom to its correct category.");
             } else {
                 alert("Failed to revise: " + (data.error || "Unknown error"));
             }

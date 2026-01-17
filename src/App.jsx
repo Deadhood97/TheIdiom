@@ -102,15 +102,38 @@ function App() {
     navigateToConcept(randomId);
   };
 
-  const handleIdiomUpdate = (updatedIdiom, conceptId) => {
+  const handleIdiomUpdate = (updatedIdiom, originalConceptId, originalScript) => {
     setData(prevData => {
-      const newConcepts = prevData.concepts.map(concept => {
-        if (concept.id !== conceptId) return concept;
-        const newIdioms = concept.idioms.map(idiom =>
-          idiom.script === updatedIdiom.script ? updatedIdiom : idiom
-        );
-        return { ...concept, idioms: newIdioms };
+      // 1. Remove the idiom from its original concept location
+      let newConcepts = prevData.concepts.map(concept => {
+        if (concept.id === originalConceptId) {
+          return {
+            ...concept,
+            idioms: concept.idioms.filter(i => i.script !== (originalScript || (updatedIdiom && updatedIdiom.script)))
+          };
+        }
+        return concept;
       });
+
+      // 2. If it's a MOVE or UPDATE (not a DELETE), add it to its target concept location
+      if (updatedIdiom) {
+        newConcepts = newConcepts.map(concept => {
+          if (concept.id === updatedIdiom.concept_id) {
+            // Check if already exists (to avoid doubles if just an update)
+            const exists = concept.idioms.some(i => i.script === updatedIdiom.script);
+            if (!exists) {
+              return { ...concept, idioms: [...concept.idioms, updatedIdiom] };
+            } else {
+              return {
+                ...concept,
+                idioms: concept.idioms.map(i => i.script === updatedIdiom.script ? updatedIdiom : i)
+              };
+            }
+          }
+          return concept;
+        });
+      }
+
       return { ...prevData, concepts: newConcepts };
     });
   };
