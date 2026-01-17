@@ -7,6 +7,8 @@ import AboutPage from './components/AboutPage';
 import Passport from './components/Passport';
 import { getVisitedConcepts, addVisitedConcept } from './utils/passportSystem';
 
+import { API_BASE_URL } from './config';
+
 function App() {
   const [data, setData] = useState(null);
   const [selectedConceptId, setSelectedConceptId] = useState(null);
@@ -21,7 +23,7 @@ function App() {
 
   useEffect(() => {
     // Load initial data
-    fetch('http://localhost:3001/api/data')
+    fetch(`${API_BASE_URL}/api/data`)
       .then(res => res.json())
       .then(setData)
       .catch(console.error);

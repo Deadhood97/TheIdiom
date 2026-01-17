@@ -1,15 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import fs from 'fs/promises';
 import path from 'path';
 import OpenAI from 'openai';
 import { fileURLToPath } from 'url';
+import { query } from './db.js';
 
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 // ES module fix for __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -23,13 +23,24 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const DATA_FILE = path.join(__dirname, '../start_data.json');
+// Helper to format rows back to nested JSON structure
+const buildDataStructure = (concepts, idioms) => {
+  return {
+    concepts: concepts.map(c => ({
+      ...c,
+      idioms: idioms.filter(i => i.concept_id === c.id)
+    }))
+  };
+};
 
 // GET /api/data
 app.get('/api/data', async (req, res) => {
   try {
-    const data = await fs.readFile(DATA_FILE, 'utf8');
-    res.json(JSON.parse(data));
+    const { rows: concepts } = await query('SELECT * FROM concepts');
+    const { rows: idioms } = await query('SELECT * FROM idioms');
+
+    const data = buildDataStructure(concepts, idioms);
+    res.json(data);
   } catch (error) {
     console.error('Error reading data:', error);
     res.status(500).json({ error: 'Failed to read data' });
@@ -41,20 +52,16 @@ app.post('/api/revise', async (req, res) => {
   const { conceptId, idiomScript, userFeedback } = req.body;
 
   try {
-    // 1. Read current data
-    const rawData = await fs.readFile(DATA_FILE, 'utf8');
-    const data = JSON.parse(rawData);
+    // 1. Fetch current idiom
+    const { rows } = await query(
+      'SELECT * FROM idioms WHERE concept_id = $1 AND script = $2',
+      [conceptId, idiomScript]
+    );
 
-    // 2. Find the concept and idiom
-    const concept = data.concepts.find(c => c.id === conceptId);
-    if (!concept) return res.status(404).json({ error: 'Concept not found' });
+    if (rows.length === 0) return res.status(404).json({ error: 'Idiom not found' });
+    const idiom = rows[0];
 
-    const idiomIndex = concept.idioms.findIndex(i => i.script === idiomScript);
-    if (idiomIndex === -1) return res.status(404).json({ error: 'Idiom not found' });
-
-    const idiom = concept.idioms[idiomIndex];
-
-    // 3. Draft Revision (The Creator)
+    // 2. Draft Revision (The Creator)
     const draftPrompt = `
       You are a linguistic expert helping to update an idiom dictionary.
       
@@ -69,7 +76,7 @@ app.post('/api/revise', async (req, res) => {
       - If it adds cultural context, update 'origin_story' or add a 'cultural_context' field.
       - If it suggests a usage correction, update 'usage_level'.
       - Maintain the JSON structure.
-      - Return ONLY the updated JSON object for this specific idiom.
+      - Return ONLY the updated JSON object fields that changed.
     `;
 
     const draftResponse = await openai.chat.completions.create({
@@ -80,7 +87,7 @@ app.post('/api/revise', async (req, res) => {
 
     const draftIdiom = JSON.parse(draftResponse.choices[0].message.content);
 
-    // 4. Verification (The Critic)
+    // 3. Verification (The Critic)
     const criticPrompt = `
       You are a strict data integrity verifier for a cultural archive.
       
@@ -117,13 +124,31 @@ app.post('/api/revise', async (req, res) => {
       });
     }
 
-    // 5. Update data (Only if approved)
-    concept.idioms[idiomIndex] = { ...idiom, ...draftIdiom };
+    // 4. Update data in DB
+    // Merge new fields
+    const updatedIdiom = { ...idiom, ...draftIdiom };
 
-    // 6. Write back to file
-    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 4));
+    await query(
+      `UPDATE idioms SET 
+        literal_translation = $1,
+        origin_story = $2,
+        cultural_context = $3,
+        meaning = $4,
+        usage_example = $5,
+        literature_reference = $6
+       WHERE id = $7`,
+      [
+        updatedIdiom.literal_translation,
+        updatedIdiom.origin_story,
+        updatedIdiom.cultural_context,
+        updatedIdiom.meaning,
+        JSON.stringify(updatedIdiom.usage_example),
+        JSON.stringify(updatedIdiom.literature_reference),
+        idiom.id
+      ]
+    );
 
-    res.json({ success: true, updatedIdiom: draftIdiom, verification: verification.reason });
+    res.json({ success: true, updatedIdiom: updatedIdiom, verification: verification.reason });
   } catch (error) {
     console.error('Error revising data:', error);
     res.status(500).json({ error: 'Failed to revise data' });
@@ -134,30 +159,34 @@ app.post('/api/revise', async (req, res) => {
 app.post('/api/vote', async (req, res) => {
   const { conceptId, idiomScript, type } = req.body;
 
+  if (type !== 'resonance' && type !== 'accuracy') {
+    return res.status(400).json({ error: "Invalid vote type" });
+  }
+
   try {
-    const rawData = await fs.readFile(DATA_FILE, 'utf8');
-    const data = JSON.parse(rawData);
+    // We use a jsonb_set query or a simpler read-modify-write if simpler.
+    // Let's do read-modify-write to ensure we have the record.
+    // Or optimized SQL update:
+    // SET voting = jsonb_set(voting, '{resonance}', (COALESCE(voting->>'resonance','0')::int + 1)::text::jsonb)
 
-    const concept = data.concepts.find(c => c.id === conceptId);
-    if (!concept) return res.status(404).json({ error: 'Concept not found' });
+    const { rows } = await query(
+      'SELECT * FROM idioms WHERE concept_id = $1 AND script = $2',
+      [conceptId, idiomScript]
+    );
 
-    const idiom = concept.idioms.find(i => i.script === idiomScript);
-    if (!idiom) return res.status(404).json({ error: 'Idiom not found' });
+    if (rows.length === 0) return res.status(404).json({ error: 'Idiom not found' });
+    const idiom = rows[0];
 
-    // Initialize if missing (backward compatibility)
-    if (!idiom.voting) {
-      idiom.voting = { resonance: 0, accuracy: 0 };
-    }
+    const currentVotes = idiom.voting || { resonance: 0, accuracy: 0 };
+    const newCount = (currentVotes[type] || 0) + 1;
+    const newVoting = { ...currentVotes, [type]: newCount };
 
-    if (type === 'resonance' || type === 'accuracy') {
-      idiom.voting[type] = (idiom.voting[type] || 0) + 1;
-    } else {
-      return res.status(400).json({ error: "Invalid vote type" });
-    }
+    await query(
+      'UPDATE idioms SET voting = $1 WHERE id = $2',
+      [JSON.stringify(newVoting), idiom.id]
+    );
 
-    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 4));
-
-    res.json({ success: true, newCounts: idiom.voting });
+    res.json({ success: true, newCounts: newVoting });
   } catch (error) {
     console.error('Error recording vote:', error);
     res.status(500).json({ error: 'Failed to record vote' });

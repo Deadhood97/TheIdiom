@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { API_BASE_URL } from '../config';
+
 export default function IdiomItem({ idiom, conceptId, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
     const [feedback, setFeedback] = useState('');
@@ -13,7 +15,7 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
         setHasVoted(prev => ({ ...prev, [type]: true }));
 
         try {
-            const res = await fetch('http://localhost:3001/api/vote', {
+            const res = await fetch(`${API_BASE_URL}/api/vote`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ conceptId, idiomScript: idiom.script, type })
@@ -31,7 +33,7 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
         if (!feedback.trim()) return;
         setIsLoading(true);
         try {
-            const res = await fetch('http://localhost:3001/api/revise', {
+            const res = await fetch(`${API_BASE_URL}/api/revise`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ conceptId, idiomScript: idiom.script, userFeedback: feedback })
