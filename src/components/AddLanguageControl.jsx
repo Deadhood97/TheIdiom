@@ -9,7 +9,8 @@ const LANGUAGES = [
     "Norwegian", "Finnish", "Danish", "Icelandic", "Welsh", "Irish",
     "Scottish Gaelic", "Amharic", "Yoruba", "Zulu", "Xhosa", "Hausa",
     "Somali", "Farsi", "Pashto", "Urdu", "Nepali", "Sinhala", "Burmese",
-    "Khmer", "Lao", "Mongolian", "Georgian", "Armenian", "Kazakh"
+    "Khmer", "Lao", "Mongolian", "Georgian", "Armenian", "Kazakh",
+    "Punjabi", "Telugu", "Tamil", "Bengali", "Marathi", "Gujarati", "Kannada", "Latin"
 ];
 
 export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess }) {
