@@ -79,13 +79,18 @@ function App() {
     localStorage.setItem('has-seen-manifesto-v1', 'true');
   };
 
-  // Handle Stamp Collection
+  // Handle Stamp Collection & Scroll Reset
   useEffect(() => {
-    if (selectedConceptId && data) {
-      const concept = data.concepts.find(c => c.id === selectedConceptId);
-      if (concept) {
-        const updated = addVisitedConcept(concept);
-        setVisitedConcepts(updated);
+    if (selectedConceptId) {
+      // Always scroll to top when entering a concept
+      window.scrollTo(0, 0);
+
+      if (data) {
+        const concept = data.concepts.find(c => c.id === selectedConceptId);
+        if (concept) {
+          const updated = addVisitedConcept(concept);
+          setVisitedConcepts(updated);
+        }
       }
     }
   }, [selectedConceptId, data]);

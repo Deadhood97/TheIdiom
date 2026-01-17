@@ -202,8 +202,15 @@ app.post('/api/generate-idiom', async (req, res) => {
             "source": "A known book, poem, or folk tale usage (or 'Oral Tradition')",
             "context": "Brief context of usage"
         },
-        "pronunciation_easy": "Phonetic guide for English speakers"
+        "pronunciation_easy": "Phonetic guide for English speakers",
+        "geolocation": {
+            "lat": 12.34, 
+            "lng": 56.78,
+            "country": "Country of origin"
+        }
       }
+      
+      IMPORTANT: You MUST include 'geolocation' with approximate coordinates for the center of the language's region.
       
       Only return { "found": false } if the language does not exist or it is impossible to find even a remote equivalent.
     `;
@@ -256,28 +263,33 @@ app.post('/api/generate-idiom', async (req, res) => {
       });
       const buffer = Buffer.from(await mp3.arrayBuffer());
 
-      // Save to file
-      const safeLang = targetLanguage.toLowerCase().replace(/[^a-z0-9]/g, '_');
-      const safeConcept = conceptTitle.toLowerCase().replace(/[^a-z0-9]/g, '-');
-      const fileName = `${safeConcept}_${safeLang}_generated_${Date.now()}.mp3`;
-      const publicPath = path.join(__dirname, '../public/audio', fileName);
+      // Import S3 Service dynamically to avoid top-level issues if we messed up imports
+      const { uploadToS3, isS3Enabled } = await import('./services/s3Service.js');
 
-      // Ensure dir exists (it should, but safety first)
-      const fs = await import('fs'); // dynamic import for fs in this scope if needed, or rely on top level. 
-      // using fs/promises from top level if available, but server.js imports? 
-      // checking imports... server.js uses 'import express...'. It doesn't import 'fs'.
-      // I need to add 'fs' import to server.js or use dynamic import. 
-      // Let's use dynamic import to be safe without changing top-level imports yet.
-      const fsPromises = (await import('fs')).default;
+      if (isS3Enabled()) {
+        // Cloud Mode: Upload to S3
+        const safeLang = targetLanguage.toLowerCase().replace(/[^a-z0-9]/g, '_');
+        const safeConcept = conceptTitle.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        const fileName = `${safeConcept}_${safeLang}_generated_${Date.now()}.mp3`;
 
-      // Wait, 'import fs from 'fs'' usually gives default export in node depending on config.
-      // Let's use fs.writeFileSync from 'fs' if I import it at top, but I'm in a replace block.
-      // I'll add the import to the top of the file in a separate step or just assume I can use dynamic import.
-      await fsPromises.writeFileSync(publicPath, buffer);
-      audioUrl = `/audio/${fileName}`;
+        console.log("☁️ Uploading audio to S3...");
+        audioUrl = await uploadToS3(buffer, fileName);
+        console.log("✅ S3 Upload complete:", audioUrl);
+      } else {
+        // Local Mode: Write to Disk
+        const safeLang = targetLanguage.toLowerCase().replace(/[^a-z0-9]/g, '_');
+        const safeConcept = conceptTitle.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        const fileName = `${safeConcept}_${safeLang}_generated_${Date.now()}.mp3`;
+        const publicPath = path.join(__dirname, '../public/audio', fileName);
+
+        const fs = (await import('fs')).default;
+        fs.writeFileSync(publicPath, buffer);
+        audioUrl = `/audio/${fileName}`;
+        console.log("💾 Saved audio locally:", audioUrl);
+      }
 
     } catch (audioErr) {
-      console.error("Audio generation failed during on-demand:", audioErr);
+      console.error("Audio generation failed:", audioErr);
       // We proceed without audio if it fails, fallback to TTS
     }
 
@@ -354,6 +366,12 @@ app.post('/api/vote', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+// Export app for Lambda/Tests
+export { app };
+
+// Only start server if run directly (not imported)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
+}

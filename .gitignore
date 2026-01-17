@@ -27,3 +27,4 @@ dist-ssr
 # Deployment Artifacts
 backend.zip
 _backup/
+trust-policy.json
