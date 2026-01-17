@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Deployment Artifacts
+backend.zip
+_backup/
