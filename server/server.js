@@ -87,7 +87,9 @@ app.post('/api/revise', async (req, res) => {
       - "KEEP": The feedback is incorrect, malicious, or the current mapping is already optimal.
       - "UPDATE": The idiom belongs in this concept, but the translation, meaning, or context needs refinement based on the feedback.
       - "MOVE": The idiom is valid but belongs in a DIFFERENT concept. Specify the new 'concept_id' from the list above.
-      - "DELETE": The idiom is fundamentally fake, incorrect, or doesn't fit ANY of the available concepts, and the feedback correctly identifies it as a mismatch that cannot be fixed by an update.
+      - "DELETE": The idiom is fundamentally fake, incorrect, or doesn't fit ANY of the available concepts. If the feedback identifies a categorical mismatch that cannot be fixed by an update and there is no better MOVE target, you MUST CHOOSE DELETE to maintain archive integrity.
+      
+      IMPORTANT: If a user points out that an idiom is in the wrong category and you agree, but no perfect category exists to MOVE it to, you SHOULD CHOOSE "DELETE" rather than keeping a wrong mapping. Accuracy is more important than volume.
       
       Return JSON:
       {

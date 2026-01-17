@@ -104,6 +104,9 @@ function App() {
 
   const handleIdiomUpdate = (updatedIdiom, originalConceptId, originalScript) => {
     setData(prevData => {
+      // If no update was made (KEEP), do nothing
+      if (updatedIdiom === undefined) return prevData;
+
       // 1. Remove the idiom from its original concept location
       let newConcepts = prevData.concepts.map(concept => {
         if (concept.id === originalConceptId) {
