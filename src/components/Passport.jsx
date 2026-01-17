@@ -41,7 +41,7 @@ export default function Passport({ isOpen, onClose, visited }) {
                                     <div key={idx} className="flex gap-4 items-center bg-white p-4 rounded-sm shadow-sm border border-black/5">
                                         <div className="w-12 h-12 rounded-full overflow-hidden border border-black/10 shrink-0">
                                             {stamp.image ? (
-                                                <img src={stamp.image} className="w-full h-full object-cover grayscale" />
+                                                <img src={stamp.image.startsWith('http') ? stamp.image : `${import.meta.env.BASE_URL}${stamp.image.replace(/^\//, '')}`} className="w-full h-full object-cover grayscale" />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center bg-paper-dark text-xl">{stamp.emoji}</div>
                                             )}
