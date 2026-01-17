@@ -155,6 +155,167 @@ app.post('/api/revise', async (req, res) => {
   }
 });
 
+// POST /api/generate-idiom
+app.post('/api/generate-idiom', async (req, res) => {
+  const { conceptId, conceptTitle, targetLanguage } = req.body;
+
+  if (!conceptId || !conceptTitle || !targetLanguage) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    console.log(`🤖 Generating idiom for ${conceptTitle} in ${targetLanguage}...`);
+
+    // 1. Check if we already have it (Simple check)
+    const { rows: existing } = await query(
+      'SELECT * FROM idioms WHERE concept_id = $1 AND language = $2',
+      [conceptId, targetLanguage]
+    );
+
+    if (existing.length > 0) {
+      console.log("   found existing idiom in DB.");
+      return res.json({ success: true, idiom: existing[0], cached: true });
+    }
+
+    // 2. Generate with AI
+    const prompt = `
+      Find a real, authentic idiom in "${targetLanguage}" that conveys the concept of: "${conceptTitle}".
+      
+      If an exact idiom doesn't exist, find the closest proverb, saying, or metaphorical expression that conveys a similar meaning.
+      
+      Requirements:
+      - It MUST be a real expression used by native speakers.
+      - Return a JSON object matching this schema:
+      {
+        "script": "Original script (e.g., native chars)",
+        "language": "${targetLanguage}",
+        "transliteration": "Latin alphabet pronunciation guide",
+        "literal_translation": "Word-for-word translation in English",
+        "meaning": "The deeper meaning",
+        "origin_story": "Brief historical or cultural origin",
+        "cultural_context": "How/when it is used",
+        "usage_example": {
+            "native": "Example sentence in native script",
+            "translation": "English translation of example"
+        },
+        "literature_reference": {
+            "source": "A known book, poem, or folk tale usage (or 'Oral Tradition')",
+            "context": "Brief context of usage"
+        },
+        "pronunciation_easy": "Phonetic guide for English speakers"
+      }
+      
+      Only return { "found": false } if the language does not exist or it is impossible to find even a remote equivalent.
+    `;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const result = JSON.parse(completion.choices[0].message.content);
+
+    if (result.found === false) {
+      return res.status(404).json({ error: `No authentic idiom found for ${conceptTitle} in ${targetLanguage}` });
+    }
+
+    // 3. Validation (The Critic)
+    const criticPrompt = `
+      Verify this idiom for the concept "${conceptTitle}":
+      ${JSON.stringify(result)}
+
+      Check for:
+      1. Authenticity: Is this a real idiom?
+      2. Relevance: Does it actually mean "${conceptTitle}"?
+      3. Safety: No hate speech or profanity.
+
+      Return JSON: { "approved": boolean, "reason": "..." }
+    `;
+
+    const criticCheck = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: criticPrompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const verification = JSON.parse(criticCheck.choices[0].message.content);
+
+    if (!verification.approved) {
+      console.warn(`❌ Generation rejected: ${verification.reason}`);
+      return res.status(400).json({ error: "Generated content failed verification", reason: verification.reason });
+    }
+
+    // 4. Generate Audio (High-Fidelity)
+    let audioUrl = null;
+    try {
+      const mp3 = await openai.audio.speech.create({
+        model: "tts-1",
+        voice: "alloy",
+        input: result.script,
+      });
+      const buffer = Buffer.from(await mp3.arrayBuffer());
+
+      // Save to file
+      const safeLang = targetLanguage.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      const safeConcept = conceptTitle.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      const fileName = `${safeConcept}_${safeLang}_generated_${Date.now()}.mp3`;
+      const publicPath = path.join(__dirname, '../public/audio', fileName);
+
+      // Ensure dir exists (it should, but safety first)
+      const fs = await import('fs'); // dynamic import for fs in this scope if needed, or rely on top level. 
+      // using fs/promises from top level if available, but server.js imports? 
+      // checking imports... server.js uses 'import express...'. It doesn't import 'fs'.
+      // I need to add 'fs' import to server.js or use dynamic import. 
+      // Let's use dynamic import to be safe without changing top-level imports yet.
+      const fsPromises = (await import('fs')).default;
+
+      // Wait, 'import fs from 'fs'' usually gives default export in node depending on config.
+      // Let's use fs.writeFileSync from 'fs' if I import it at top, but I'm in a replace block.
+      // I'll add the import to the top of the file in a separate step or just assume I can use dynamic import.
+      await fsPromises.writeFileSync(publicPath, buffer);
+      audioUrl = `/audio/${fileName}`;
+
+    } catch (audioErr) {
+      console.error("Audio generation failed during on-demand:", audioErr);
+      // We proceed without audio if it fails, fallback to TTS
+    }
+
+    // 5. Persist to DB
+    const { rows: inserted } = await query(
+      `INSERT INTO idioms (
+            concept_id, script, language, transliteration, literal_translation,
+            meaning, origin_story, cultural_context, usage_example,
+            literature_reference, geolocation, voting, audio_url, pronunciation_easy
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+        RETURNING *`,
+      [
+        conceptId,
+        result.script,
+        result.language,
+        result.transliteration,
+        result.literal_translation,
+        result.meaning,
+        result.origin_story,
+        result.cultural_context,
+        JSON.stringify(result.usage_example),
+        JSON.stringify(result.literature_reference),
+        JSON.stringify({ lat: 0, lng: 0 }), // Default geo, maybe improve later
+        JSON.stringify({ resonance: 0, accuracy: 0 }),
+        audioUrl,
+        result.pronunciation_easy
+      ]
+    );
+
+    console.log(`✅ Generated and saved: ${result.script} (${targetLanguage})`);
+    res.json({ success: true, idiom: inserted[0] });
+
+  } catch (error) {
+    console.error('Error generating idiom:', error);
+    res.status(500).json({ error: 'Failed to generate idiom' });
+  }
+});
+
 // POST /api/vote
 app.post('/api/vote', async (req, res) => {
   const { conceptId, idiomScript, type } = req.body;

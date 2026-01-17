@@ -23,13 +23,28 @@ async function enrichLinguist() {
 
     for (let i = 0; i < data.concepts.length; i++) {
         const concept = data.concepts[i];
-        console.log(`\nProcessing: ${concept.universal_concept} (${i + 1}/${data.concepts.length})`);
 
-        const idiomScripts = concept.idioms.map(id => ({ script: id.script, language: id.language }));
+        // Target V2 concepts for re-enrichment to ensure quality
+        const forceEnrich = ["CONC_HASTE", "CONC_PATIENCE", "CONC_EMPTY", "CONC_PEARLS"].includes(concept.id);
+
+        // Filter for idioms that need enrichment OR belong to V2 concepts we want to upgrade
+        const idiomsToEnrich = concept.idioms.filter(idiom =>
+            forceEnrich ||
+            !idiom.literature_reference ||
+            !idiom.usage_example ||
+            (typeof idiom.literature_reference === 'string' && idiom.literature_reference.length < 10)
+        ).map(id => ({ script: id.script, language: id.language }));
+
+        if (idiomsToEnrich.length === 0) {
+            console.log(`\nSkipping: ${concept.universal_concept} (All idioms already enriched)`);
+            continue;
+        }
+
+        console.log(`\nProcessing: ${concept.universal_concept} (${i + 1}/${data.concepts.length}) - Enriching ${idiomsToEnrich.length} idioms`);
 
         const prompt = `
       Universal Concept: "${concept.universal_concept}"
-      Idioms to Enrich: ${JSON.stringify(idiomScripts)}
+      Idioms to Enrich: ${JSON.stringify(idiomsToEnrich)}
       
       Task:
       For EACH idiom provided above, generate:
@@ -39,7 +54,7 @@ async function enrichLinguist() {
       Return JSON format:
       {
         "enrichments": {
-           "Original_Idiom_Script": {
+           "Idiom_Script_Here": {
               "usage_example": {
                  "native": "Original sentence string",
                  "translation": "English translation string"
@@ -65,10 +80,10 @@ async function enrichLinguist() {
 
             let updateCount = 0;
             concept.idioms = concept.idioms.map(idiom => {
-                const enrichment = enrichments[idiom.script];
-                if (enrichment) {
+                // If this idiom was in our target list, try to update it
+                if (enrichments && enrichments[idiom.script]) {
                     updateCount++;
-                    return { ...idiom, ...enrichment };
+                    return { ...idiom, ...enrichments[idiom.script] };
                 }
                 return idiom;
             });

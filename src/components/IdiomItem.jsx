@@ -58,8 +58,76 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
         <div className="bg-white p-6 shadow-sm border border-black/5 hover:border-saffron/50 transition-colors group flex flex-col h-full">
             {/* Header: Script & Language */}
             <div className="flex justify-between items-start mb-4">
-                <div className="font-noto text-2xl mb-2">{idiom.script}</div>
-                <div className="text-sm font-bold uppercase tracking-widest text-ink/40 mb-2">{idiom.language}</div>
+                <div className="font-noto text-2xl mb-1">{idiom.script}</div>
+                {idiom.transliteration && (
+                    <div className="font-serif italic text-ink/50 text-sm mb-2">
+                        ({idiom.transliteration})
+                    </div>
+                )}
+                <div className="flex flex-col items-end">
+                    <div className="text-sm font-bold uppercase tracking-widest text-ink/40 mb-2">{idiom.language}</div>
+                    <button
+                        onClick={() => {
+                            if (idiom.audio_url) {
+                                // Clean up double slashes if BASE_URL ends with / and audio_url starts with /
+                                const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+                                const audioPath = `${baseUrl}${idiom.audio_url}`;
+                                const audio = new Audio(audioPath);
+                                audio.play().catch(e => console.error("Audio play failed:", e));
+                                return;
+                            }
+
+                            const synth = window.speechSynthesis;
+                            const voices = synth.getVoices();
+
+                            const langMap = {
+                                'Hindi': 'hi-IN',
+                                'Japanese': 'ja-JP',
+                                'Spanish': 'es-ES',
+                                'French': 'fr-FR',
+                                'German': 'de-DE',
+                                'Italian': 'it-IT',
+                                'Portuguese': 'pt-PT',
+                                'Russian': 'ru-RU',
+                                'Chinese': 'zh-CN',
+                                'Swahili': 'sw-TZ',
+                                'Tamil': 'ta-IN',
+                                'Telugu': 'te-IN',
+                                'Bengali': 'bn-IN',
+                                'Persian': 'fa-IR',
+                                'Turkish': 'tr-TR',
+                                'Vietnamese': 'vi-VN',
+                                'Estonian': 'et-EE',
+                                'Latin': 'it-IT',
+                                'English': 'en-GB'
+                            };
+
+                            const targetLangCode = langMap[idiom.language];
+                            const nativeVoice = voices.find(v => v.lang.includes(targetLangCode));
+
+                            let textToSpeak = idiom.script;
+                            let langToUse = targetLangCode || 'en-US';
+
+                            if (!nativeVoice && targetLangCode !== 'en-GB') {
+                                if (idiom.pronunciation_easy) {
+                                    textToSpeak = idiom.pronunciation_easy;
+                                    langToUse = 'en-US';
+                                }
+                            }
+
+                            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                            utterance.lang = langToUse;
+                            if (nativeVoice) utterance.voice = nativeVoice;
+
+                            synth.cancel();
+                            synth.speak(utterance);
+                        }}
+                        className="text-xs flex items-center gap-1 text-royal/60 hover:text-royal transition-colors font-bold uppercase tracking-wider"
+                        title={idiom.audio_url ? "Play High-Fidelity Audio" : "Play Native Pronunciation"}
+                    >
+                        <span>🔊 Play Audio</span>
+                    </button>
+                </div>
             </div>
 
             {/* Primary Translation */}

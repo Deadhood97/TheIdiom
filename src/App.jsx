@@ -8,6 +8,10 @@ import Passport from './components/Passport';
 import { getVisitedConcepts, addVisitedConcept } from './utils/passportSystem';
 
 import { API_BASE_URL } from './config';
+import Loader from './components/Loader';
+import AddLanguageControl from './components/AddLanguageControl';
+
+// (Deleted misplaced code)
 
 function App() {
   const [data, setData] = useState(null);
@@ -38,6 +42,38 @@ function App() {
     }
   }, []);
 
+  // History & Navigation Handling
+  useEffect(() => {
+    // Handle initial load based on hash
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      setSelectedConceptId(hash);
+    }
+
+    // Handle back/forward buttons
+    const handlePopState = (event) => {
+      // If state has ID, use it. If hash exists but no state (load), use hash. Else null.
+      const id = event.state?.conceptId || window.location.hash.slice(1) || null;
+      // specific check: if ID is empty string (home), make it null
+      setSelectedConceptId(id === '' ? null : id);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateToConcept = (id) => {
+    setSelectedConceptId(id);
+    if (id) {
+      window.history.pushState({ conceptId: id }, '', `#${id}`);
+    } else {
+      // Go back to home
+      window.history.pushState({ conceptId: null }, '', ' ');
+      // Optional: Clear hash cleanly
+      // history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+  };
+
   const handleCloseAbout = () => {
     setIsAboutOpen(false);
     localStorage.setItem('has-seen-manifesto-v1', 'true');
@@ -57,7 +93,8 @@ function App() {
   const handleRandomJump = () => {
     if (!data) return;
     const randomIdx = Math.floor(Math.random() * data.concepts.length);
-    setSelectedConceptId(data.concepts[randomIdx].id);
+    const randomId = data.concepts[randomIdx].id;
+    navigateToConcept(randomId);
   };
 
   const handleIdiomUpdate = (updatedIdiom, conceptId) => {
@@ -67,6 +104,17 @@ function App() {
         const newIdioms = concept.idioms.map(idiom =>
           idiom.script === updatedIdiom.script ? updatedIdiom : idiom
         );
+        return { ...concept, idioms: newIdioms };
+      });
+      return { ...prevData, concepts: newConcepts };
+    });
+  };
+
+  const handleIdiomAdd = (newIdiom, conceptId) => {
+    setData(prevData => {
+      const newConcepts = prevData.concepts.map(concept => {
+        if (concept.id !== conceptId) return concept;
+        const newIdioms = [...concept.idioms, newIdiom];
         return { ...concept, idioms: newIdioms };
       });
       return { ...prevData, concepts: newConcepts };
@@ -89,7 +137,7 @@ function App() {
         <div className="text-center md:text-left">
           <h1
             className="text-5xl md:text-6xl font-serif italic mb-2 text-ink cursor-pointer hover:text-royal transition-colors"
-            onClick={() => setSelectedConceptId(null)}
+            onClick={() => navigateToConcept(null)}
           >
             The Idiom
           </h1>
@@ -121,7 +169,7 @@ function App() {
 
         {selectedConceptId && (
           <button
-            onClick={() => setSelectedConceptId(null)}
+            onClick={() => navigateToConcept(null)}
             className="absolute left-0 -bottom-16 md:bottom-auto md:top-1/2 md:-translate-y-1/2 text-sm font-bold uppercase tracking-widest text-ink/40 hover:text-royal transition-colors flex items-center gap-2 hidden md:flex"
           >
             &larr; Back
@@ -131,7 +179,7 @@ function App() {
 
       <main className="max-w-6xl mx-auto min-h-screen">
         {!data ? (
-          <div className="text-center font-serif text-xl animate-pulse text-ink/40 mt-32">Loading Archive...</div>
+          <Loader />
         ) : (
           <AnimatePresence mode="wait">
             {/* View 1: Concept Deck */}
@@ -148,7 +196,7 @@ function App() {
                   <ConceptCard
                     key={concept.id}
                     concept={concept}
-                    onClick={() => setSelectedConceptId(concept.id)}
+                    onClick={() => navigateToConcept(concept.id)}
                   />
                 ))}
               </motion.div>
@@ -203,12 +251,19 @@ function App() {
                           onUpdate={(updated) => handleIdiomUpdate(updated, activeConcept.id)}
                         />
                       ))}
+
+                      {/* Add Language Control Card */}
+                      <AddLanguageControl
+                        conceptId={activeConcept.id}
+                        conceptTitle={activeConcept.universal_concept}
+                        onSuccess={(newIdiom) => handleIdiomAdd(newIdiom, activeConcept.id)}
+                      />
                     </div>
 
                     {/* Return Navigation Footer */}
                     <div className="mt-24 text-center">
                       <button
-                        onClick={() => setSelectedConceptId(null)}
+                        onClick={() => navigateToConcept(null)}
                         className="px-8 py-3 bg-ink text-paper font-serif italic text-xl hover:bg-royal transition-colors shadow-lg"
                       >
                         Return to Archive
@@ -221,7 +276,7 @@ function App() {
           </AnimatePresence>
         )}
       </main>
-    </div>
+    </div >
   );
 }
 

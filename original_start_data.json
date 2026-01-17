@@ -1,14 +1,14 @@
 {
     "metadata": {
-        "version": "2.6 (Unabridged)",
-        "description": "The Complete Collection: V1 Indic Roots + V2 Global Expansion.",
-        "total_concepts": 11
+        "version": "1.0",
+        "description": "Global Idiom Mapping Project",
+        "total_concepts": 8
     },
     "concepts": [
         {
             "id": "CONC_01",
             "slug": "redundant-effort",
-            "universal_concept": "The Paradox of Redundancy",
+            "universal_concept": "Doing something pointless because it's already abundant there",
             "emoji": "🔄",
             "idioms": [
                 {
@@ -35,8 +35,7 @@
                     "voting": {
                         "resonance": 47,
                         "accuracy": 13
-                    },
-                    "audio_url": "/audio/redundant-effort_english_carrying_coals_.mp3"
+                    }
                 },
                 {
                     "language": "Hindi",
@@ -62,8 +61,7 @@
                     "voting": {
                         "resonance": 36,
                         "accuracy": 18
-                    },
-                    "audio_url": "/audio/redundant-effort_hindi________________.mp3"
+                    }
                 },
                 {
                     "language": "French",
@@ -89,8 +87,7 @@
                     "voting": {
                         "resonance": 32,
                         "accuracy": 15
-                    },
-                    "audio_url": "/audio/redundant-effort_french_porter_de_l_eau.mp3"
+                    }
                 },
                 {
                     "language": "Telugu",
@@ -116,8 +113,7 @@
                     "voting": {
                         "resonance": 54,
                         "accuracy": 16
-                    },
-                    "audio_url": "/audio/redundant-effort_telugu________________.mp3"
+                    }
                 },
                 {
                     "language": "Bengali",
@@ -143,8 +139,7 @@
                     "voting": {
                         "resonance": 32,
                         "accuracy": 20
-                    },
-                    "audio_url": "/audio/redundant-effort_bengali________________.mp3"
+                    }
                 },
                 {
                     "language": "Portuguese",
@@ -170,8 +165,7 @@
                     "voting": {
                         "resonance": 17,
                         "accuracy": 7
-                    },
-                    "audio_url": "/audio/redundant-effort_portuguese_levar_areia___p.mp3"
+                    }
                 },
                 {
                     "language": "German",
@@ -197,8 +191,7 @@
                     "voting": {
                         "resonance": 32,
                         "accuracy": 20
-                    },
-                    "audio_url": "/audio/redundant-effort_german_eulen_nach_athe.mp3"
+                    }
                 },
                 {
                     "language": "Arabic",
@@ -224,8 +217,7 @@
                     "voting": {
                         "resonance": 57,
                         "accuracy": 8
-                    },
-                    "audio_url": "/audio/redundant-effort_arabic________________.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/redundant-effort.png"
@@ -233,7 +225,7 @@
         {
             "id": "CONC_02",
             "slug": "extreme-happiness",
-            "universal_concept": "The Summit of Joy",
+            "universal_concept": "Sudden, overwhelming joy or celebration",
             "emoji": "🤩",
             "idioms": [
                 {
@@ -260,8 +252,7 @@
                     "voting": {
                         "resonance": 52,
                         "accuracy": 12
-                    },
-                    "audio_url": "/audio/extreme-happiness_english_on_cloud_nine.mp3"
+                    }
                 },
                 {
                     "language": "Hindi",
@@ -287,8 +278,7 @@
                     "voting": {
                         "resonance": 42,
                         "accuracy": 11
-                    },
-                    "audio_url": "/audio/extreme-happiness_hindi________________.mp3"
+                    }
                 },
                 {
                     "language": "Punjabi",
@@ -314,8 +304,7 @@
                     "voting": {
                         "resonance": 15,
                         "accuracy": 11
-                    },
-                    "audio_url": "/audio/extreme-happiness_punjabi______________.mp3"
+                    }
                 },
                 {
                     "language": "Tamil",
@@ -341,36 +330,7 @@
                     "voting": {
                         "resonance": 45,
                         "accuracy": 23
-                    },
-                    "audio_url": "/audio/extreme-happiness_tamil________________.mp3"
-                },
-                {
-                    "language": "Persian",
-                    "script": "در پوست خود نگنجیدن",
-                    "transliteration": "Dar poost-e khod nagonjidan",
-                    "literal_translation": "Not fitting in one's own skin",
-                    "origin_story": "You are so expanded by happiness that your physical body cannot contain you.",
-                    "usage_level": "Common / Poetic",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 35.6892,
-                        "lng": 51.389
-                    },
-                    "historical_period": "Classical Persian",
-                    "usage_example": {
-                        "native": "When he heard the news, he didn't fit in his own skin.",
-                        "translation": "He was bursting with joy."
-                    },
-                    "literature_reference": {
-                        "source": "Persian Literature",
-                        "context": "Commonly used in poetry and prose to describe ecstatic joy."
-                    },
-                    "voting": {
-                        "resonance": 88,
-                        "accuracy": 95
-                    },
-                    "pronunciation_easy": "Dar poost-e khod na-gon-jee-dan",
-                    "audio_url": "/audio/extreme-happiness_persian________________.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/extreme-happiness.png"
@@ -378,7 +338,7 @@
         {
             "id": "CONC_03",
             "slug": "hypocrisy",
-            "universal_concept": "The Mirror of Hypocrisy",
+            "universal_concept": "Criticizing someone for a fault that you also have",
             "emoji": "🤥",
             "idioms": [
                 {
@@ -405,8 +365,7 @@
                     "voting": {
                         "resonance": 10,
                         "accuracy": 11
-                    },
-                    "audio_url": "/audio/hypocrisy_english_the_pot_calling.mp3"
+                    }
                 },
                 {
                     "language": "Hindi",
@@ -432,8 +391,7 @@
                     "voting": {
                         "resonance": 48,
                         "accuracy": 17
-                    },
-                    "audio_url": "/audio/hypocrisy_hindi________________.mp3"
+                    }
                 },
                 {
                     "language": "Punjabi",
@@ -459,8 +417,7 @@
                     "voting": {
                         "resonance": 56,
                         "accuracy": 18
-                    },
-                    "audio_url": "/audio/hypocrisy_punjabi________________.mp3"
+                    }
                 },
                 {
                     "language": "Bengali",
@@ -486,8 +443,7 @@
                     "voting": {
                         "resonance": 28,
                         "accuracy": 23
-                    },
-                    "audio_url": "/audio/hypocrisy_bengali________________.mp3"
+                    }
                 },
                 {
                     "language": "Portuguese",
@@ -513,8 +469,7 @@
                     "voting": {
                         "resonance": 43,
                         "accuracy": 14
-                    },
-                    "audio_url": "/audio/hypocrisy_portuguese_latin.mp3"
+                    }
                 },
                 {
                     "language": "Arabic",
@@ -540,35 +495,7 @@
                     "voting": {
                         "resonance": 22,
                         "accuracy": 13
-                    },
-                    "audio_url": "/audio/hypocrisy_arabic_arabic.mp3"
-                },
-                {
-                    "language": "Jamaican Patois",
-                    "script": "Finger neber say 'look here,' him say 'look yonder'",
-                    "transliteration": "Finger neber say 'look here,' him say 'look yonder'",
-                    "literal_translation": "The finger never points at itself",
-                    "origin_story": "Physically, a finger points away. Ease of accusation vs self-reflection.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 18.1096,
-                        "lng": -77.2975
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Why blame me? The finger never points at itself.",
-                        "translation": "You never blame yourself."
-                    },
-                    "literature_reference": {
-                        "source": "Caribbean Folklore",
-                        "context": ""
-                    },
-                    "voting": {
-                        "resonance": 95,
-                        "accuracy": 100
-                    },
-                    "audio_url": "/audio/hypocrisy_jamaican_patois_finger_neber_sa.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/hypocrisy.png"
@@ -576,7 +503,7 @@
         {
             "id": "CONC_04",
             "slug": "impossibility",
-            "universal_concept": "The Horizon of Impossibility",
+            "universal_concept": "Something that will never happen",
             "emoji": "🐖",
             "idioms": [
                 {
@@ -603,8 +530,7 @@
                     "voting": {
                         "resonance": 47,
                         "accuracy": 5
-                    },
-                    "audio_url": "/audio/impossibility_english_when_pigs_fly.mp3"
+                    }
                 },
                 {
                     "language": "Hindi",
@@ -630,8 +556,7 @@
                     "voting": {
                         "resonance": 27,
                         "accuracy": 21
-                    },
-                    "audio_url": "/audio/impossibility_hindi________________.mp3"
+                    }
                 },
                 {
                     "language": "Tamil",
@@ -657,8 +582,7 @@
                     "voting": {
                         "resonance": 56,
                         "accuracy": 5
-                    },
-                    "audio_url": "/audio/impossibility_tamil_____________.mp3"
+                    }
                 },
                 {
                     "language": "French",
@@ -684,8 +608,7 @@
                     "voting": {
                         "resonance": 28,
                         "accuracy": 11
-                    },
-                    "audio_url": "/audio/impossibility_french_quand_les_poule.mp3"
+                    }
                 },
                 {
                     "language": "Portuguese",
@@ -711,8 +634,7 @@
                     "voting": {
                         "resonance": 23,
                         "accuracy": 15
-                    },
-                    "audio_url": "/audio/impossibility_portuguese_portuguese.mp3"
+                    }
                 },
                 {
                     "language": "Arabic",
@@ -738,8 +660,7 @@
                     "voting": {
                         "resonance": 57,
                         "accuracy": 19
-                    },
-                    "audio_url": "/audio/impossibility_arabic_arabic.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/impossibility.png"
@@ -747,7 +668,7 @@
         {
             "id": "CONC_05",
             "slug": "frantic-activity",
-            "universal_concept": "The Chaos of Activity",
+            "universal_concept": "Being extremely busy or disorganized",
             "emoji": "🏃",
             "idioms": [
                 {
@@ -774,8 +695,7 @@
                     "voting": {
                         "resonance": 14,
                         "accuracy": 13
-                    },
-                    "audio_url": "/audio/frantic-activity_english_running_around_.mp3"
+                    }
                 },
                 {
                     "language": "Bengali",
@@ -801,8 +721,7 @@
                     "voting": {
                         "resonance": 23,
                         "accuracy": 15
-                    },
-                    "audio_url": "/audio/frantic-activity_bengali________________.mp3"
+                    }
                 },
                 {
                     "language": "Mandarin",
@@ -828,64 +747,7 @@
                     "voting": {
                         "resonance": 14,
                         "accuracy": 23
-                    },
-                    "audio_url": "/audio/frantic-activity_mandarin_____.mp3"
-                },
-                {
-                    "language": "Russian",
-                    "script": "Крутиться как белка в колесе",
-                    "transliteration": "Krutitsya kak belka v koles",
-                    "literal_translation": "Spinning like a squirrel in a wheel",
-                    "origin_story": "Visualizes pointless, frantic energy that goes nowhere.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 55.7558,
-                        "lng": 37.6173
-                    },
-                    "historical_period": "19th Century",
-                    "usage_example": {
-                        "native": "I am spinning like a squirrel in a wheel.",
-                        "translation": "I'm extremely busy but getting nowhere."
-                    },
-                    "literature_reference": {
-                        "source": "Krylov's Fables",
-                        "context": "Used to describe frantic but often unproductive activity."
-                    },
-                    "voting": {
-                        "resonance": 85,
-                        "accuracy": 90
-                    },
-                    "pronunciation_easy": "Kroo-teet-sya kak bel-ka v ko-le-se",
-                    "audio_url": "/audio/frantic-activity_russian________________.mp3"
-                },
-                {
-                    "language": "Turkish",
-                    "script": "İki ayağı bir pabuca girmek",
-                    "transliteration": "Iki ayagi bir pabuca girmek",
-                    "literal_translation": "Trying to fit two feet into one shoe",
-                    "origin_story": "The panic of trying to do too much in too little space/time.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 41.0082,
-                        "lng": 28.9784
-                    },
-                    "historical_period": "Ottoman Era",
-                    "usage_example": {
-                        "native": "Patron gelince iki ayağım bir pabuca girdi.",
-                        "translation": "When the boss arrived, I panicked (two feet in one shoe)."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "Describes a state of panic or rushed activity."
-                    },
-                    "voting": {
-                        "resonance": 82,
-                        "accuracy": 88
-                    },
-                    "pronunciation_easy": "Ee-kee a-ya-gi bir pa-boo-ja gir-mek",
-                    "audio_url": "/audio/frantic-activity_turkish_i_ki_aya___bir_.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/frantic-activity.png"
@@ -893,7 +755,7 @@
         {
             "id": "CONC_06",
             "slug": "unchangeable-nature",
-            "universal_concept": "The Inescapable Nature",
+            "universal_concept": "A person cannot change their true character",
             "emoji": "🐆",
             "idioms": [
                 {
@@ -920,8 +782,7 @@
                     "voting": {
                         "resonance": 53,
                         "accuracy": 9
-                    },
-                    "audio_url": "/audio/unchangeable-nature_english_a_leopard_canno.mp3"
+                    }
                 },
                 {
                     "language": "Hindi",
@@ -948,8 +809,7 @@
                     "voting": {
                         "resonance": 33,
                         "accuracy": 8
-                    },
-                    "audio_url": "/audio/unchangeable-nature_hindi________________.mp3"
+                    }
                 },
                 {
                     "language": "Punjabi",
@@ -975,8 +835,7 @@
                     "voting": {
                         "resonance": 57,
                         "accuracy": 7
-                    },
-                    "audio_url": "/audio/unchangeable-nature_punjabi________________.mp3"
+                    }
                 },
                 {
                     "language": "Portuguese",
@@ -1002,36 +861,7 @@
                     "voting": {
                         "resonance": 15,
                         "accuracy": 15
-                    },
-                    "audio_url": "/audio/unchangeable-nature_portuguese_o_lobo_perde_o_.mp3"
-                },
-                {
-                    "language": "Swahili",
-                    "script": "Mwana wa nyoka ni nyoka",
-                    "transliteration": "Mwana wa nyoka ni nyoka",
-                    "literal_translation": "The child of a snake is a snake",
-                    "origin_story": "Nature is inherited. You cannot teach a snake not to be a snake.",
-                    "usage_level": "Proverbial",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": -6.1659,
-                        "lng": 39.2026
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Don't trust him; mwana wa nyoka ni nyoka.",
-                        "translation": "The apple doesn't fall far from the tree."
-                    },
-                    "literature_reference": {
-                        "source": "Swahili Methali",
-                        "context": "A warning that bad traits are inherited and unchangeable."
-                    },
-                    "voting": {
-                        "resonance": 90,
-                        "accuracy": 92
-                    },
-                    "pronunciation_easy": "Mwa-na wa nyo-ka nee nyo-ka",
-                    "audio_url": "/audio/unchangeable-nature_swahili_mwana_wa_nyoka_.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/unchangeable-nature.png"
@@ -1039,7 +869,7 @@
         {
             "id": "CONC_07",
             "slug": "all-talk",
-            "universal_concept": "The Hollow Thunder",
+            "universal_concept": "Someone who threatens/brags but takes no action",
             "emoji": "🗣️",
             "idioms": [
                 {
@@ -1066,8 +896,7 @@
                     "voting": {
                         "resonance": 45,
                         "accuracy": 16
-                    },
-                    "audio_url": "/audio/all-talk_english_all_bark_and_no.mp3"
+                    }
                 },
                 {
                     "language": "Bengali",
@@ -1093,8 +922,7 @@
                     "voting": {
                         "resonance": 58,
                         "accuracy": 21
-                    },
-                    "audio_url": "/audio/all-talk_bengali________________.mp3"
+                    }
                 },
                 {
                     "language": "Telugu",
@@ -1120,8 +948,7 @@
                     "voting": {
                         "resonance": 37,
                         "accuracy": 8
-                    },
-                    "audio_url": "/audio/all-talk_telugu________________.mp3"
+                    }
                 },
                 {
                     "language": "Portuguese",
@@ -1147,8 +974,7 @@
                     "voting": {
                         "resonance": 56,
                         "accuracy": 18
-                    },
-                    "audio_url": "/audio/all-talk_portuguese_latido_de_c_o_n.mp3"
+                    }
                 },
                 {
                     "language": "German",
@@ -1174,548 +1000,94 @@
                     "voting": {
                         "resonance": 29,
                         "accuracy": 10
-                    },
-                    "audio_url": "/audio/all-talk_german_gro_e_klappe__n.mp3"
+                    }
                 }
             ],
             "image": "/assets/concepts/all-talk.png"
         },
         {
-            "id": "CONC_HASTE",
-            "slug": "paradox-of-haste",
-            "universal_concept": "The Paradox of Haste",
-            "emoji": "🏃💨",
-            "idioms": [
-                {
-                    "language": "Italian",
-                    "script": "La gatta frettolosa fece i gattini ciechi",
-                    "transliteration": "La gatta frettolosa fece i gattini ciechi.",
-                    "literal_translation": "The hasty cat gave birth to blind kittens",
-                    "origin_story": "Nature cannot be rushed. Forcing birth leads to blindness (kittens born early).",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 41.8719,
-                        "lng": 12.5674
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Marta voleva finire l'opera in una sola notte, ma si sa, la gatta frettolosa fece i gattini ciechi.",
-                        "translation": "Marta wanted to finish the work in just one night, but you know, the hasty cat gave birth to blind kittens."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This idiom is deeply rooted in Italian folklore and culture, often used to emphasize the importance of taking one's time to ensure quality outcomes. It warns against rushing, indicating that haste can lead to poor or incomplete results."
-                    },
-                    "voting": {
-                        "resonance": 88,
-                        "accuracy": 98
-                    },
-                    "pronunciation_easy": "La gat-ta fret-to-lo-sa...",
-                    "audio_url": "/audio/paradox-of-haste_italian_la_gatta_fretto.mp3"
-                },
-                {
-                    "language": "Japanese",
-                    "script": "急がば回れ",
-                    "transliteration": "Isogaba maware",
-                    "literal_translation": "If you are in a hurry, go around",
-                    "origin_story": "Crossing Lake Biwa: the direct wet route was dangerous. The long land route was safer/faster.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 35.0116,
-                        "lng": 135.7681
-                    },
-                    "historical_period": "15th Century",
-                    "usage_example": {
-                        "native": "彼は成功を急ぎ過ぎた結果、仕事が失敗に終わったが、急がば回れと言う通りだ。",
-                        "translation": "He rushed to succeed, and as a result, his work ended in failure, but as they say, more haste, less speed."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Japanese idiom advises taking the longer route if it is safer and more reliable. It's culturally ingrained wisdom and has been passed down through generations, often cited in conversations about perseverance and caution."
-                    },
-                    "voting": {
-                        "resonance": 92,
-                        "accuracy": 100
-                    },
-                    "pronunciation_easy": "Ee-so-ga-ba ma-wa-re",
-                    "audio_url": "/audio/paradox-of-haste_japanese______.mp3"
-                },
-                {
-                    "language": "Estonian",
-                    "script": "Tasa sõuad, kaugele jõuad",
-                    "transliteration": "Tasa souad, kaugele jouad",
-                    "literal_translation": "Row slowly, and you will reach far",
-                    "origin_story": "A maritime proverb. Speed exhausts the rower; rhythm and endurance conquer the sea.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 58.5953,
-                        "lng": 25.0136
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Kui tahate tõeliselt edukas olla, siis tasa sõuad, kaugele jõuad.",
-                        "translation": "If you truly want to be successful, then go quietly and you will reach far."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Estonian saying reflects the country's cultural values of patience and caution. It's often referenced in stories and teachings about steady and careful progress leading to long-term success."
-                    },
-                    "voting": {
-                        "resonance": 75,
-                        "accuracy": 95
-                    },
-                    "pronunciation_easy": "Ta-sa so-uad, kau-ge-le yo-uad",
-                    "audio_url": "/audio/paradox-of-haste_estonian_tasa_s_uad__kau.mp3"
-                },
-                {
-                    "language": "Swahili",
-                    "script": "Haraka haraka haina baraka",
-                    "transliteration": "Haraka haraka haina baraka",
-                    "literal_translation": "Hurry hurry has no blessing",
-                    "origin_story": "Does not just say haste is bad, but that it lacks 'Baraka' (divine blessing/success).",
-                    "usage_level": "UBIQUITOUS",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": -4.0435,
-                        "lng": 39.6682
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Sote alitaka kujenga nyumba kwa haraka, lakini haraka haraka haina baraka, na msingi uliharibika.",
-                        "translation": "Sote wanted to build the house quickly, but haste has no blessing, and the foundation failed."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Swahili saying is commonly used in East African storytelling and proverbs to underline the belief that rushing can lead to mistakes and misfortune. It's frequently used to advise patience and careful preparation."
-                    },
-                    "voting": {
-                        "resonance": 98,
-                        "accuracy": 100
-                    },
-                    "pronunciation_easy": "Ha-ra-ka ha-ra-ka ha-ee-na ba-ra-ka",
-                    "audio_url": "/audio/paradox-of-haste_swahili_haraka_haraka_h.mp3"
-                },
-                {
-                    "language": "Russian",
-                    "script": "Тише едешь, дальше будешь",
-                    "transliteration": "Tishe yedesh', dal'she budesh'",
-                    "literal_translation": "Ride quieter/slower, you will get further",
-                    "origin_story": "Travel wisdom. Reckless riding breaks wheels. Steady riding arrives.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 59.9343,
-                        "lng": 30.3351
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Он всегда напоминал своим ученикам: «Тише едешь, дальше будешь», пока они старались изо всех сил.",
-                        "translation": "He always reminded his students, 'Quietly you go, further you'll get,' as they tried their hardest."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Russian proverb is widely recognized across Russian-speaking communities and is often found in literature and folklore to underscore the virtue of being slow and steady to achieve better results in the long run."
-                    },
-                    "voting": {
-                        "resonance": 92,
-                        "accuracy": 95
-                    },
-                    "pronunciation_easy": "Tee-she ye-desh dal-she boo-desh",
-                    "audio_url": "/audio/paradox-of-haste_russian________________.mp3"
-                }
-            ],
-            "image": "/assets/concepts/haste_abstract.png"
-        },
-        {
-            "id": "CONC_PATIENCE",
-            "slug": "art-of-patience",
-            "universal_concept": "The Art of Patience",
-            "emoji": "💧",
-            "idioms": [
-                {
-                    "language": "Hindi",
-                    "script": "बूंद बूंद से सागर भरता है",
-                    "transliteration": "Boond boond se sagar barta hai",
-                    "literal_translation": "Drop by drop the ocean fills",
-                    "origin_story": "Even the infinite ocean is made of single drops. Small efforts compound.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 19.076,
-                        "lng": 72.8777
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "अगर तुम रोज़ थोड़ा-थोड़ा पढ़ाई करोगे, तो अंत में बूंद बूंद से सागर भरता है।",
-                        "translation": "If you study a little every day, in the end, little drops make the ocean."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This idiom is commonly used in Indian households and educational setups to encourage patience and consistent effort over time."
-                    },
-                    "voting": {
-                        "resonance": 91,
-                        "accuracy": 95
-                    },
-                    "pronunciation_easy": "Boond boond say saa-gar bhar-ta hay",
-                    "audio_url": "/audio/art-of-patience_hindi________________.mp3"
-                },
-                {
-                    "language": "Japanese",
-                    "script": "塵も積もれば山となる",
-                    "transliteration": "Chiri mo tsumoreba yama to naru",
-                    "literal_translation": "Even dust, when piled up, becomes a mountain",
-                    "origin_story": "Transforms the 'worthless' (dust) into the 'majestic' (mountain) through time.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 35.3606,
-                        "lng": 138.7274
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "塵も積もれば山となるので、毎日少しずつ貯金しています。",
-                        "translation": "Even dust amassed will make a mountain, so I'm saving a little bit every day."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Japanese proverb is widely known and used to emphasize incremental effort leading to significant results."
-                    },
-                    "voting": {
-                        "resonance": 89,
-                        "accuracy": 92
-                    },
-                    "pronunciation_easy": "Chi-ri mo tsu-mo-re-ba ya-ma to na-ru",
-                    "audio_url": "/audio/art-of-patience_japanese___________.mp3"
-                },
-                {
-                    "language": "Latin",
-                    "script": "Gutta cavat lapidem",
-                    "transliteration": "Gutta cavat lapidem",
-                    "literal_translation": "The drop hollows the stone",
-                    "origin_story": "Persistence conquers hardness not by strength, but by consistency.",
-                    "usage_level": "Classic",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 41.9028,
-                        "lng": 12.4964
-                    },
-                    "historical_period": "Roman Era",
-                    "usage_example": {
-                        "native": "Gutta cavat lapidem, non vi sed saepe cadendo.",
-                        "translation": "A drop hollows a stone, not by force but by falling often."
-                    },
-                    "literature_reference": {
-                        "source": "Ovid's Epistulae ex Ponto",
-                        "context": "This phrase is found in Ovid’s writings, conveying the idea that persistence overcomes resistance."
-                    },
-                    "voting": {
-                        "resonance": 95,
-                        "accuracy": 100
-                    },
-                    "pronunciation_easy": "Goo-ta ka-vat la-pi-dem",
-                    "audio_url": "/audio/art-of-patience_latin_gutta_cavat_lap.mp3"
-                },
-                {
-                    "language": "Persian",
-                    "script": "صبر تلخ است ولیکن بر شیرین دارد",
-                    "transliteration": "Sabr talkh ast, velikan bar-e shirin darad",
-                    "literal_translation": "Patience is bitter, but it has sweet fruit",
-                    "origin_story": "Waiting is painful (bitter), but the result (fruit) is worth it.",
-                    "usage_level": "Poetic",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 29.5926,
-                        "lng": 52.5836
-                    },
-                    "historical_period": "Classical Persian",
-                    "usage_example": {
-                        "native": "صبر تلخ است ولیکن بر شیرین دارد، پس منتظر نتیجه بمانید.",
-                        "translation": "Patience is bitter, but it bears sweet fruit, so wait for the outcome."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Persian saying is often cited to encourage perseverance through challenging times."
-                    },
-                    "voting": {
-                        "resonance": 94,
-                        "accuracy": 96
-                    },
-                    "pronunciation_easy": "Sabr talkh ast, ve-lee-kan bar-e shee-reen da-rad",
-                    "audio_url": "/audio/art-of-patience_persian________________.mp3"
-                },
-                {
-                    "language": "Vietnamese",
-                    "script": "Có công mài sắt, có ngày nên kim",
-                    "transliteration": "Co cong mai sat, co ngay nen kim",
-                    "literal_translation": "If you have the effort to grind iron, one day it will become a needle",
-                    "origin_story": "Grinding a massive iron bar down to a tiny needle takes a lifetime of patience.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 21.0285,
-                        "lng": 105.8542
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Dù khó khăn đến đâu, cứ nhớ rằng: có công mài sắt, có ngày nên kim.",
-                        "translation": "No matter how difficult it is, remember: it takes effort to grind an iron bar to make a needle."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Vietnamese idiom is frequently used to remind people that persistent effort will eventually yield results."
-                    },
-                    "voting": {
-                        "resonance": 88,
-                        "accuracy": 90
-                    },
-                    "pronunciation_easy": "Kaw kong mai sat, kaw ngay nen kim",
-                    "audio_url": "/audio/art-of-patience_vietnamese_c__c_ng_m_i_s_t.mp3"
-                }
-            ],
-            "image": "/assets/concepts/patience_abstract.png"
-        },
-        {
-            "id": "CONC_EMPTY",
-            "slug": "noise-of-emptiness",
-            "universal_concept": "The Noise of Emptiness",
-            "emoji": "🥁",
-            "idioms": [
-                {
-                    "language": "Hindi",
-                    "script": "अधजल गगरी छलकत जाए",
-                    "transliteration": "Adhjal gagri chhalakat jaye",
-                    "literal_translation": "A half-filled pot spills the most",
-                    "origin_story": "Full vessels are stable. Half-empty/shallow ones are unstable and noisy.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 25.3176,
-                        "lng": 82.9739
-                    },
-                    "historical_period": "Medieval",
-                    "usage_example": {
-                        "native": "राम हमेशा लंबी-लंबी बातें करता है, लेकिन उसके पास कोई असली उपलब्धि नहीं है। वह तो बस अधजल गगरी छलकत जाए का उदाहरण है।",
-                        "translation": "Ram always talks a big game, but he doesn't have any real achievements. He's just an example of 'a half-filled pitcher spills more'."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This idiom is commonly used in Indian folk wisdom to describe someone who talks a lot but doesn't have the substance to back it up."
-                    },
-                    "voting": {
-                        "resonance": 88,
-                        "accuracy": 92
-                    },
-                    "pronunciation_easy": "Adh-jal gag-ree chhal-kat ja-ay",
-                    "audio_url": "/audio/noise-of-emptiness_hindi________________.mp3"
-                },
-                {
-                    "language": "Spanish",
-                    "script": "Mucho ruido y pocas nueces",
-                    "transliteration": "Mucho ruido y pocas nueces",
-                    "literal_translation": "Much noise and few walnuts",
-                    "origin_story": "A big cracking sound that yields an empty shell. High promise, zero return.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 40.4168,
-                        "lng": -3.7038
-                    },
-                    "historical_period": "Classic",
-                    "usage_example": {
-                        "native": "El debate fue mucho ruido y pocas nueces; no se llegó a ninguna decisión concreta.",
-                        "translation": "The debate was all noise and no results; no concrete decision was reached."
-                    },
-                    "literature_reference": {
-                        "source": "Much Ado About Nothing by William Shakespeare",
-                        "context": "Though this is originally a Spanish idiom, its essence is captured in the Shakespearean play, which explores themes of unnecessary fuss and trivial matters."
-                    },
-                    "voting": {
-                        "resonance": 85,
-                        "accuracy": 88
-                    },
-                    "pronunciation_easy": "Moo-cho rwee-do ee po-kas nwe-ses",
-                    "audio_url": "/audio/noise-of-emptiness_spanish_mucho_ruido_y_p.mp3"
-                },
-                {
-                    "language": "Bengali",
-                    "script": "খালি কলসি বাজে বেশি",
-                    "transliteration": "Khali kolshi baje beshi",
-                    "literal_translation": "Empty pitchers sound the most",
-                    "origin_story": "If you tap a full vessel, it is dull. An empty one rings loud. Refers to empty talkers.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 22.5726,
-                        "lng": 88.3639
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "অমল কথায় বেশ জোরালো, কিন্তু কাজের সময় তার অবস্থা খালি কলসি বাজে বেশি।",
-                        "translation": "Amal is very outspoken, but when it comes to performance, he's like an empty vessel making the most noise."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Bengali idiom is part of local folklore and is used to describe people who are loud but not effective."
-                    },
-                    "voting": {
-                        "resonance": 88,
-                        "accuracy": 95
-                    },
-                    "pronunciation_easy": "Kha-li kol-shi ba-jay be-shi",
-                    "audio_url": "/audio/noise-of-emptiness_bengali________________.mp3"
-                },
-                {
-                    "language": "Turkish",
-                    "script": "Boş teneke çok ses çıkarır",
-                    "transliteration": "Bos teneke cok ses cikarir",
-                    "literal_translation": "An empty tin can makes much noise",
-                    "origin_story": "Industrial version of the empty vessel. Tin cans rattle loudly when kicked if empty.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 39.9334,
-                        "lng": 32.8597
-                    },
-                    "historical_period": "Modern",
-                    "usage_example": {
-                        "native": "Ali her toplantıda çok şey söyler ama çözüm önermez. Boş teneke çok ses çıkarır gerçekten de.",
-                        "translation": "Ali says a lot at every meeting but offers no solutions. It is indeed true that an empty can makes a lot of noise."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "Used widely in Turkish culture, this idiom highlights those who are all talk but no action and appears frequently in Turkish proverbs and folk sayings."
-                    },
-                    "voting": {
-                        "resonance": 85,
-                        "accuracy": 89
-                    },
-                    "pronunciation_easy": "Bosh te-ne-ke chok ses chi-ka-rir",
-                    "audio_url": "/audio/noise-of-emptiness_turkish_bo__teneke__ok_.mp3"
-                },
-                {
-                    "language": "Russian",
-                    "script": "Пустая бочка пуще гремит",
-                    "transliteration": "Pustaya bochka pushche gremit",
-                    "literal_translation": "An empty barrel rattles louder",
-                    "origin_story": "A full barrel rolls silently. An empty one bounces and crashes.",
-                    "usage_level": "Common",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 55.7558,
-                        "lng": 37.6173
-                    },
-                    "historical_period": "Traditional",
-                    "usage_example": {
-                        "native": "Сергей постоянно теоретизирует обо всём и ни о чём, ведь пустая бочка пуще гремит.",
-                        "translation": "Sergey constantly theorizes about everything and nothing, as an empty barrel makes the most noise."
-                    },
-                    "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This is a common Russian proverb used to describe individuals who are loud or talkative but lack real content or meaning."
-                    },
-                    "voting": {
-                        "resonance": 87,
-                        "accuracy": 91
-                    },
-                    "pronunciation_easy": "Poos-ta-ya boch-ka poosh-che gre-meet",
-                    "audio_url": "/audio/noise-of-emptiness_russian________________.mp3"
-                }
-            ],
-            "image": "/assets/concepts/empty_vessels_abstract.png"
-        },
-        {
-            "id": "CONC_PEARLS",
-            "slug": "tragedy-of-value",
-            "universal_concept": "The Tragedy of Unappreciated Value",
+            "id": "CONC_08",
+            "slug": "unrequited-wisdom",
+            "universal_concept": "Giving value to someone who cannot appreciate it",
             "emoji": "💎",
             "idioms": [
                 {
+                    "language": "English",
+                    "script": "Casting pearls before swine",
+                    "pronunciation_easy": "Pearls before swine",
+                    "literal_translation": "Giving jewelry to pigs",
+                    "origin_story": "Biblical. Pigs want food, not beauty. Offering them pearls is useless.",
+                    "usage_level": "Formal / Literary",
+                    "risk_level": "Safe",
+                    "geolocation": {
+                        "lat": 51.509865,
+                        "lng": -0.118092
+                    },
+                    "historical_period": "16th Century",
+                    "usage_example": {
+                        "native": "He was trying to explain quantum physics to his pet dog—truly casting pearls before swine.",
+                        "translation": "He was trying to explain quantum physics to his pet dog—truly casting pearls before swine."
+                    },
+                    "literature_reference": {
+                        "source": "The Bible, Matthew 7:6",
+                        "context": "This phrase appears in the Sermon on the Mount, advising not to offer valuable things to those who cannot appreciate them."
+                    },
+                    "voting": {
+                        "resonance": 29,
+                        "accuracy": 19
+                    }
+                },
+                {
                     "language": "Hindi",
-                    "script": "बंदर क्या जाने अदरक का स्वाद",
-                    "transliteration": "Bandar kya jaane adrak ka swad",
-                    "literal_translation": "What does a monkey know of the taste of ginger?",
-                    "origin_story": "Ginger is sophisticated/spicy. A monkey wants sweet fruit. He discards the valuable ginger because he can't understand it.",
+                    "script": "बन्दर के हाथ में नारियल",
+                    "pronunciation_easy": "Bandar kay haath mein naa-ri-yal",
+                    "literal_translation": "A coconut in a monkey's hand",
+                    "origin_story": "A monkey cannot open the hard shell of a coconut, so he discards it. He doesn't know the value inside.",
                     "usage_level": "Common",
                     "risk_level": "Safe",
                     "geolocation": {
-                        "lat": 25.2138,
-                        "lng": 75.8648
+                        "lat": 28.613939,
+                        "lng": 77.209023
                     },
-                    "historical_period": "Traditional",
+                    "historical_period": "17th Century",
                     "usage_example": {
-                        "native": "राम ने अपने अनपढ़ दोस्त को हार्वर्ड के रिसर्च पेपर दिखाए, लेकिन वह तो बंदर क्या जाने अदरक का स्वाद वाली बात थी।",
-                        "translation": "Ram showed his uneducated friend Harvard's research papers, but it was a case of 'what does a monkey know about the taste of ginger?'"
+                        "native": "उनको बढ़िया पुस्तक देना बंदर के हाथ में नारियल देने जैसा है।",
+                        "translation": "Giving them a good book is like putting a coconut in a monkey's hands."
                     },
                     "literature_reference": {
                         "source": "Oral Tradition",
-                        "context": "This Hindi idiom is often used in folk tales and everyday conversations to express the sentiment of presenting something valuable to someone who cannot appreciate it."
+                        "context": "This idiom is part of Indian folk wisdom, illustrating the folly of giving something valuable to someone who won't understand its worth."
                     },
                     "voting": {
-                        "resonance": 95,
-                        "accuracy": 98
-                    },
-                    "pronunciation_easy": "Ban-dar kya jaa-nay ad-rak ka swaad",
-                    "audio_url": "/audio/tragedy-of-value_hindi________________.mp3"
+                        "resonance": 11,
+                        "accuracy": 19
+                    }
                 },
                 {
                     "language": "Tamil",
                     "script": "கழுதைக்கு தெரியுமா கற்பூர வாசனை",
-                    "transliteration": "Kazhu-thaikku theriyuma karpoora vaasanai",
+                    "pronunciation_easy": "Kazhu-thaikku teri-yuma kar-poora vaasanai",
                     "literal_translation": "Does a donkey know the smell of camphor?",
-                    "origin_story": "Camphor is used in holy rituals. The donkey, a symbol of brute labor, has no context for divinity or fragrance.",
-                    "usage_level": "Common",
+                    "origin_story": "Camphor is a divine scent. The donkey is a beast of burden. It has no capacity to enjoy the divine.",
+                    "usage_level": "Witty",
                     "risk_level": "Safe",
                     "geolocation": {
-                        "lat": 9.9252,
-                        "lng": 78.1198
+                        "lat": 13.08268,
+                        "lng": 80.270718
                     },
-                    "historical_period": "Traditional",
+                    "historical_period": "Sangam Period",
                     "usage_example": {
-                        "native": "அவருக்கு அந்தப் பாடலின் அருமை கூறினேன், ஆனால் அது கழுதைக்கு தெரியுமா கற்பூர வாசனை போல இருந்தது.",
-                        "translation": "I explained to him the beauty of that song, but it was like asking 'does a donkey know the fragrance of camphor?'"
+                        "native": "அவனுக்கு இப்படிப் பேசுவது, கழுதைக்கு கற்பூர வாசனை காட்டுவது போலதான்.",
+                        "translation": "Explaining things to him is like showing the smell of camphor to a donkey."
                     },
                     "literature_reference": {
                         "source": "Oral Tradition",
-                        "context": "This Tamil idiom is commonly passed down through generations in Tamil Nadu and is used to highlight situations where someone's lack of understanding diminishes the appreciation of value."
+                        "context": "This Tamil idiom is a part of local wisdom, used to describe the futility of offering refined experiences to those who can't appreciate them."
                     },
                     "voting": {
-                        "resonance": 95,
-                        "accuracy": 98
-                    },
-                    "pronunciation_easy": "Ka-zhu-thaik-ku te-ri-yu-ma kar-poo-ra vaa-sa-nai",
-                    "audio_url": "/audio/tragedy-of-value_tamil________________.mp3"
-                },
-                {
-                    "language": "English",
-                    "script": "Casting pearls before swine",
-                    "transliteration": "Pearls before swine",
-                    "literal_translation": "Throwing jewelry to pigs",
-                    "origin_story": "Biblical (Matthew 7:6). Pigs do not understand wealth; they will trample it. Do not give wisdom to those who cannot value it.",
-                    "usage_level": "Classic",
-                    "risk_level": "Safe",
-                    "geolocation": {
-                        "lat": 31.7683,
-                        "lng": 35.2137
-                    },
-                    "historical_period": "Biblical",
-                    "usage_example": {
-                        "native": "She tried to explain the intricacies of classical music to them, but it was like casting pearls before swine.",
-                        "translation": "She tried to explain the intricacies of classical music to them, but it was like casting pearls before swine."
-                    },
-                    "literature_reference": {
-                        "source": "The Bible, Matthew 7:6",
-                        "context": "This phrase appears in the New Testament where it advises against offering something valuable to those who cannot appreciate its worth."
-                    },
-                    "voting": {
-                        "resonance": 92,
-                        "accuracy": 99
-                    },
-                    "pronunciation_easy": "Casting pearls before swine",
-                    "audio_url": "/audio/tragedy-of-value_english_casting_pearls_.mp3"
+                        "resonance": 56,
+                        "accuracy": 24
+                    }
                 },
                 {
                     "language": "Japanese",
@@ -1731,18 +1103,17 @@
                     },
                     "historical_period": "Edo Period",
                     "usage_example": {
-                        "native": "あの若者に古典文学を渡しても、豚に真珠です。",
-                        "translation": "Giving classical literature to that young man is like a pearl before a pig."
+                        "native": "その絵を彼に見せても、彼にとっては豚に真珠だ。",
+                        "translation": "Showing him the painting is like pearls before swine to him."
                     },
                     "literature_reference": {
-                        "source": "Oral Tradition",
-                        "context": "This Japanese idiom is deeply rooted in Japanese culture and is frequently used to caution someone against wasting resources on the unappreciative."
+                        "source": "Japanese Proverbs: Wit and Wisdom (Stevenson, John)",
+                        "context": "This idiom is featured in collections of Japanese proverbs, depicting the redundancy of offering valuable things to those who cannot appreciate them."
                     },
                     "voting": {
                         "resonance": 42,
                         "accuracy": 20
-                    },
-                    "audio_url": "/audio/tragedy-of-value_japanese_____.mp3"
+                    }
                 },
                 {
                     "language": "German",
@@ -1758,21 +1129,20 @@
                     },
                     "historical_period": "Classical Greek Era",
                     "usage_example": {
-                        "native": "Dieser Vortrag über grundlegende Mathematik war wie Eulen nach Athen tragen für die versammelten Mathematikprofessoren.",
-                        "translation": "This lecture on basic mathematics was like carrying owls to Athens for the assembled mathematics professors."
+                        "native": "Schon wieder über das Teamprojekt reden? Das ist Eulen nach Athen tragen!",
+                        "translation": "Talking about the team project again? That's carrying owls to Athens!"
                     },
                     "literature_reference": {
-                        "source": "The Acharnians by Aristophanes",
-                        "context": "This German idiom refers to a line in Aristophanes' play 'The Acharnians', where carrying owls to Athens is symbolic of bringing something to a place where it is abundant or already well-known."
+                        "source": "The Wasps by Aristophanes",
+                        "context": "This ancient Greek idiom appears in classical literature to signify doing something superfluous, as Athens was known for its abundance of owls."
                     },
                     "voting": {
                         "resonance": 55,
                         "accuracy": 16
-                    },
-                    "audio_url": "/audio/tragedy-of-value_german_eulen_nach_athe.mp3"
+                    }
                 }
             ],
-            "image": "/assets/concepts/pearls_swine_abstract.png"
+            "image": "/assets/concepts/unrequited-wisdom.png"
         }
     ]
 }
