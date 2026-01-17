@@ -1,6 +1,6 @@
 export const getVisitedConcepts = () => {
     try {
-        const stored = localStorage.getItem('idiom_passport');
+        const stored = localStorage.getItem('idiom_passport_v1');
         return stored ? JSON.parse(stored) : [];
     } catch (e) {
         return [];
@@ -19,7 +19,7 @@ export const addVisitedConcept = (concept) => {
                 timestamp: new Date().toISOString()
             };
             const updated = [newEntry, ...visited];
-            localStorage.setItem('idiom_passport', JSON.stringify(updated));
+            localStorage.setItem('idiom_passport_v1', JSON.stringify(updated));
             return updated;
         }
         return visited;
@@ -29,6 +29,6 @@ export const addVisitedConcept = (concept) => {
 };
 
 export const clearPassport = () => {
-    localStorage.removeItem('idiom_passport');
+    localStorage.removeItem('idiom_passport_v1');
     return [];
 };
