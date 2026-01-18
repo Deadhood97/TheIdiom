@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import Toast from './Toast';
 
 import { API_BASE_URL } from '../config';
 
@@ -9,6 +11,8 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
     const [hasVoted, setHasVoted] = useState({ resonance: false, accuracy: false });
 
     const [voteCounts, setVoteCounts] = useState(idiom.voting || { resonance: 0, accuracy: 0 });
+    const [audioStatus, setAudioStatus] = useState('idle'); // idle, loading, playing
+    const [toast, setToast] = useState(null); // { message, type }
 
     const handleVote = async (type) => {
         if (hasVoted[type]) return;
@@ -23,9 +27,14 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
             const data = await res.json();
             if (data.success) {
                 setVoteCounts(data.newCounts);
+            } else {
+                setToast({ message: data.error || 'Voting failed', type: 'error' });
+                setHasVoted(prev => ({ ...prev, [type]: false }));
             }
         } catch (e) {
             console.error("Vote failed", e);
+            setToast({ message: 'Network error. Please try again.', type: 'error' });
+            setHasVoted(prev => ({ ...prev, [type]: false }));
         }
     };
 
@@ -70,64 +79,68 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
                     <div className="text-sm font-bold uppercase tracking-widest text-ink/40 mb-2">{idiom.language}</div>
                     <button
                         onClick={() => {
+                            if (audioStatus !== 'idle') return;
+
                             if (idiom.audio_url) {
-                                // Clean up double slashes if BASE_URL ends with / and audio_url starts with /
+                                setAudioStatus('loading');
                                 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
                                 const audioPath = `${baseUrl}${idiom.audio_url}`;
                                 const audio = new Audio(audioPath);
-                                audio.play().catch(e => console.error("Audio play failed:", e));
+
+                                audio.onplay = () => setAudioStatus('playing');
+                                audio.onended = () => setAudioStatus('idle');
+                                audio.onerror = () => {
+                                    setAudioStatus('idle');
+                                    setToast({ message: 'Audio playback failed', type: 'error' });
+                                };
+
+                                audio.play().catch(e => {
+                                    console.error("Audio play failed:", e);
+                                    setAudioStatus('idle');
+                                });
                                 return;
                             }
 
+                            // Speech Synthesis fallback
+                            setAudioStatus('playing');
                             const synth = window.speechSynthesis;
                             const voices = synth.getVoices();
-
                             const langMap = {
-                                'Hindi': 'hi-IN',
-                                'Japanese': 'ja-JP',
-                                'Spanish': 'es-ES',
-                                'French': 'fr-FR',
-                                'German': 'de-DE',
-                                'Italian': 'it-IT',
-                                'Portuguese': 'pt-PT',
-                                'Russian': 'ru-RU',
-                                'Chinese': 'zh-CN',
-                                'Swahili': 'sw-TZ',
-                                'Tamil': 'ta-IN',
-                                'Telugu': 'te-IN',
-                                'Bengali': 'bn-IN',
-                                'Persian': 'fa-IR',
-                                'Turkish': 'tr-TR',
-                                'Vietnamese': 'vi-VN',
-                                'Estonian': 'et-EE',
-                                'Latin': 'it-IT',
-                                'English': 'en-GB'
+                                'Hindi': 'hi-IN', 'Japanese': 'ja-JP', 'Spanish': 'es-ES', 'French': 'fr-FR',
+                                'German': 'de-DE', 'Italian': 'it-IT', 'Portuguese': 'pt-PT', 'Russian': 'ru-RU',
+                                'Chinese': 'zh-CN', 'Swahili': 'sw-TZ', 'Tamil': 'ta-IN', 'Telugu': 'te-IN',
+                                'Bengali': 'bn-IN', 'Persian': 'fa-IR', 'Turkish': 'tr-TR', 'Vietnamese': 'vi-VN',
+                                'Estonian': 'et-EE', 'Latin': 'it-IT', 'English': 'en-GB'
                             };
 
                             const targetLangCode = langMap[idiom.language];
                             const nativeVoice = voices.find(v => v.lang.includes(targetLangCode));
-
                             let textToSpeak = idiom.script;
                             let langToUse = targetLangCode || 'en-US';
 
-                            if (!nativeVoice && targetLangCode !== 'en-GB') {
-                                if (idiom.pronunciation_easy) {
-                                    textToSpeak = idiom.pronunciation_easy;
-                                    langToUse = 'en-US';
-                                }
+                            if (!nativeVoice && targetLangCode !== 'en-GB' && idiom.pronunciation_easy) {
+                                textToSpeak = idiom.pronunciation_easy;
+                                langToUse = 'en-US';
                             }
 
                             const utterance = new SpeechSynthesisUtterance(textToSpeak);
                             utterance.lang = langToUse;
                             if (nativeVoice) utterance.voice = nativeVoice;
+                            utterance.onend = () => setAudioStatus('idle');
+                            utterance.onerror = () => setAudioStatus('idle');
 
                             synth.cancel();
                             synth.speak(utterance);
                         }}
-                        className="text-xs flex items-center gap-1 text-royal/60 hover:text-royal transition-colors font-bold uppercase tracking-wider"
+                        disabled={audioStatus !== 'idle'}
+                        className={`text-xs flex items-center gap-1 transition-colors font-bold uppercase tracking-wider ${audioStatus === 'playing' ? 'text-saffron' : 'text-royal/60 hover:text-royal'
+                            }`}
                         title={idiom.audio_url ? "Play High-Fidelity Audio" : "Play Native Pronunciation"}
                     >
-                        <span>🔊 Play Audio</span>
+                        <span>{
+                            audioStatus === 'loading' ? '⏳ Loading...' :
+                                audioStatus === 'playing' ? '🔊 Playing...' : '🔊 Play Audio'
+                        }</span>
                     </button>
                 </div>
             </div>
@@ -221,6 +234,16 @@ export default function IdiomItem({ idiom, conceptId, onUpdate }) {
                     </button>
                 </div>
             )}
+            {/* Toast Notifications */}
+            <AnimatePresence>
+                {toast && (
+                    <Toast
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={() => setToast(null)}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 }

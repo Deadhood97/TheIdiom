@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL } from '../config';
 import Loader from './Loader';
+import Toast from './Toast';
 
 const LANGUAGES = [
     "Korean", "Thai", "Polish", "Ukrainian", "Greek", "Hebrew", "Indonesian",
@@ -18,6 +19,7 @@ export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess 
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [toast, setToast] = useState(null);
 
     const handleGenerate = async () => {
         if (!selectedLanguage) return;
@@ -41,9 +43,14 @@ export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess 
                 throw new Error(data.error || "Failed to generate idiom");
             }
 
-            onSuccess(data.idiom);
-            setIsOpen(false);
-            setSelectedLanguage('');
+            setToast({ message: `Successfully archived the ${selectedLanguage} idiom!`, type: 'success' });
+
+            // Wait a moment for user to see success before closing
+            setTimeout(() => {
+                onSuccess(data.idiom);
+                setIsOpen(false);
+                setSelectedLanguage('');
+            }, 1500);
         } catch (err) {
             console.error(err);
             setError(err.message);
@@ -125,6 +132,16 @@ export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess 
             <p className="text-[10px] text-ink/30 uppercase tracking-widest text-center mt-2">
                 Powered by AI • Verified for Authenticity
             </p>
+
+            <AnimatePresence>
+                {toast && (
+                    <Toast
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={() => setToast(null)}
+                    />
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 }
