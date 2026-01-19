@@ -16,9 +16,13 @@ const port = process.env.PORT || 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
-// CORS Hardening
+// CORS: Reverted to permissive for stability
+app.use(cors());
+
+// Strict CORS (Disabled for debugging)
+/*
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
@@ -37,19 +41,20 @@ app.use(cors({
     }
   }
 }));
+*/
 
 app.use(express.json());
 
-// Security: Rate Limiting
+// Security: Rate Limiting (Relaxed)
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 100,
+  limit: 1000, // Increased
   message: { error: "Too many requests, please try again later." }
 });
 
 const aiLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  limit: 10, // 10 AI calls per hour per IP
+  limit: 100, // Increased from 10 to 100
   message: { error: "Linguistic quota exceeded. Please return in an hour." },
   skip: (req) => {
     // Skip rate limiting if valid admin key is provided
