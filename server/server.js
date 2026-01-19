@@ -22,7 +22,9 @@ app.set('trust proxy', 1);
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
-  'https://deadhood97.github.io'
+  'https://deadhood97.github.io',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:5173'
 ];
 
 app.use(cors({
@@ -30,7 +32,8 @@ app.use(cors({
     if (!origin || allowedOrigins.some(o => origin.startsWith(o))) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.error('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS: ' + origin));
     }
   }
 }));
