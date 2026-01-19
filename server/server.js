@@ -246,7 +246,7 @@ app.post('/api/generate-idiom', requireAdmin, async (req, res) => {
     const { universal_concept, description, keywords } = conceptData[0];
 
     const { rows: existing } = await query(
-      'SELECT * FROM idioms WHERE concept_id = $1 AND language = $2',
+      'SELECT * FROM idioms WHERE concept_id = $1 AND LOWER(language) = LOWER($2)',
       [conceptId, targetLanguage]
     );
 

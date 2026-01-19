@@ -14,12 +14,17 @@ const LANGUAGES = [
     "Punjabi", "Telugu", "Tamil", "Bengali", "Marathi", "Gujarati", "Kannada", "Latin"
 ];
 
-export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess }) {
+export default function AddLanguageControl({ conceptId, conceptTitle, existingLanguages = [], onSuccess }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [toast, setToast] = useState(null);
+
+    // Filter out languages that already exist for this concept
+    const availableLanguages = LANGUAGES.filter(lang =>
+        !existingLanguages.some(existing => existing.toLowerCase() === lang.toLowerCase())
+    );
 
     const handleGenerate = async () => {
         if (!selectedLanguage) return;
@@ -43,7 +48,12 @@ export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess 
                 throw new Error(data.error || "Failed to generate idiom");
             }
 
-            setToast({ message: `Successfully archived the ${selectedLanguage} idiom!`, type: 'success' });
+            // Handle duplicate/cached response gracefully
+            if (data.cached) {
+                setToast({ message: `We already have a ${selectedLanguage} idiom!`, type: 'info' });
+            } else {
+                setToast({ message: `Successfully archived the ${selectedLanguage} idiom!`, type: 'success' });
+            }
 
             // Wait a moment for user to see success before closing
             setTimeout(() => {
@@ -109,7 +119,8 @@ export default function AddLanguageControl({ conceptId, conceptTitle, onSuccess 
                     className="flex-1 p-2 border-b-2 border-ink/10 focus:border-royal outline-none bg-transparent font-sans"
                 >
                     <option value="">Select a language...</option>
-                    {LANGUAGES.sort().map(lang => (
+                    {availableLanguages.length === 0 && <option disabled>All languages archived!</option>}
+                    {availableLanguages.sort().map(lang => (
                         <option key={lang} value={lang}>{lang}</option>
                     ))}
                 </select>

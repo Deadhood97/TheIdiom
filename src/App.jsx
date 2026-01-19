@@ -287,6 +287,7 @@ function App() {
                       <AddLanguageControl
                         conceptId={activeConcept.id}
                         conceptTitle={activeConcept.universal_concept}
+                        existingLanguages={activeConcept.idioms.map(i => i.language)}
                         onSuccess={(newIdiom) => handleIdiomAdd(newIdiom, activeConcept.id)}
                       />
                     </div>
